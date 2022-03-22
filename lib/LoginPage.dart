@@ -112,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
       // 设置图片为圆形
       child: ClipOval(
         child: Image.asset(
-          "images/logo.png",
+          "assets/images/b6.jpg",
           height: 100,
           width: 100,
           fit: BoxFit.cover,
