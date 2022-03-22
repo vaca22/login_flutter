@@ -82,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
     // 正则匹配手机号
     RegExp exp = RegExp(r'^((13[0-9])|(14[0-9])|(15[0-9])|(16[0-9])|(17[0-9])|(18[0-9])|(19[0-9]))\d{8}$');
     if (value.isEmpty) {
-      return '用户名不能为空!';
+      return '手机号不能为空!';
     }else if (!exp.hasMatch(value)) {
       return '请输入正确手机号';
     }
@@ -138,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
               //设置键盘类型
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: "用户名",
+                labelText: "手机号",
                 hintText: "请输入手机号",
                 prefixIcon: const Icon(Icons.person),
                 //尾部添加清除按钮
@@ -192,12 +192,12 @@ class _LoginPageState extends State<LoginPage> {
     // 登录按钮区域
     Widget loginButtonArea = Container(
       margin: const EdgeInsets.only(left: 20,right: 20),
-      height: 45.0,
+      height: 65.0,
       child: RaisedButton(
         color: Colors.blue[300],
         child: Text(
           "登录",
-          style: Theme.of(context).primaryTextTheme.headline1,
+          style: Theme.of(context).primaryTextTheme.headline5,
         ),
         // 设置按钮圆角
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
