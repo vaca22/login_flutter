@@ -119,8 +119,8 @@ class _LoginPageState extends State<LoginPage> {
 
     //输入文本框区域
     Widget inputTextArea = Container(
-      margin: EdgeInsets.only(left: 20,right: 20),
-      decoration: new BoxDecoration(
+      margin: const EdgeInsets.only(left: 20,right: 20),
+      decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(8)),
           color: Colors.white
       ),
@@ -152,8 +152,8 @@ class _LoginPageState extends State<LoginPage> {
               //验证用户名
               validator: validateUserName,
               //保存数据
-              onSaved: (String value){
-                _username = value;
+              onSaved: (String? value){
+                _username = value!;
               },
             ),
             TextFormField(
@@ -177,8 +177,8 @@ class _LoginPageState extends State<LoginPage> {
               //密码验证
               validator:validatePassWord,
               //保存数据
-              onSaved: (String value){
-                _password = value;
+              onSaved: (String? value){
+                _password = value!;
               },
             )
           ],
@@ -194,7 +194,7 @@ class _LoginPageState extends State<LoginPage> {
         color: Colors.blue[300],
         child: Text(
           "登录",
-          style: Theme.of(context).primaryTextTheme.headline,
+          style: Theme.of(context).primaryTextTheme.headline1,
         ),
         // 设置按钮圆角
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
