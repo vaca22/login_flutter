@@ -13,14 +13,14 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
 
   //焦点
-  FocusNode _focusNodeUserName = new FocusNode();
+  final FocusNode _focusNodeUserName = new FocusNode();
   FocusNode _focusNodePassWord = new FocusNode();
 
   //用户名输入框控制器，此控制器可以监听用户名输入框操作
-  TextEditingController _userNameController = new TextEditingController();
+  final TextEditingController _userNameController = new TextEditingController();
 
   //表单状态
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   var _password = '';//用户名
   var _username = '';//密码
@@ -35,7 +35,9 @@ class _LoginPageState extends State<LoginPage> {
     _focusNodePassWord.addListener(_focusNodeListener);
     //监听用户名框的输入改变
     _userNameController.addListener((){
-      print(_userNameController.text);
+      if (kDebugMode) {
+        print(_userNameController.text);
+      }
 
       // 监听文本框输入变化，当有内容的时候，显示尾部清除按钮，否则不显示
       if (_userNameController.text.isNotEmpty) {
@@ -61,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   // 监听焦点
-  Future<Null> _focusNodeListener() async{
+  Future<void> _focusNodeListener() async{
     if(_focusNodeUserName.hasFocus){
       if (kDebugMode) {
         print("用户名框获取焦点");
