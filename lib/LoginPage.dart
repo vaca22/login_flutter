@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -35,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
       print(_userNameController.text);
 
       // 监听文本框输入变化，当有内容的时候，显示尾部清除按钮，否则不显示
-      if (_userNameController.text.length > 0) {
+      if (_userNameController.text.isNotEmpty) {
         _isShowClear = true;
       }else{
         _isShowClear = false;
@@ -60,21 +61,23 @@ class _LoginPageState extends State<LoginPage> {
   // 监听焦点
   Future<Null> _focusNodeListener() async{
     if(_focusNodeUserName.hasFocus){
-      print("用户名框获取焦点");
+      if (kDebugMode) {
+        print("用户名框获取焦点");
+      }
       // 取消密码框的焦点状态
       _focusNodePassWord.unfocus();
     }
     if (_focusNodePassWord.hasFocus) {
-      print("密码框获取焦点");
+      if (kDebugMode) {
+        print("密码框获取焦点");
+      }
       // 取消用户名框焦点状态
       _focusNodeUserName.unfocus();
     }
   }
 
 
-  /**
-   * 验证用户名
-   */
+  /// 验证用户名
   String? validateUserName(value){
     // 正则匹配手机号
     RegExp exp = RegExp(r'^((13[0-9])|(14[0-9])|(15[0-9])|(16[0-9])|(17[0-9])|(18[0-9])|(19[0-9]))\d{8}$');
@@ -86,9 +89,7 @@ class _LoginPageState extends State<LoginPage> {
     return null;
   }
 
-  /**
-   * 验证密码
-   */
+  /// 验证密码
   String? validatePassWord(value){
     if (value.isEmpty) {
       return '密码不能为空';
@@ -101,7 +102,9 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
 
-    print(ScreenUtil().scaleHeight);
+    if (kDebugMode) {
+      print(ScreenUtil().scaleHeight);
+    }
 
     // logo 图片区域
     Widget logoImageArea = Container(
@@ -137,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
               decoration: InputDecoration(
                 labelText: "用户名",
                 hintText: "请输入手机号",
-                prefixIcon: Icon(Icons.person),
+                prefixIcon: const Icon(Icons.person),
                 //尾部添加清除按钮
                 suffixIcon:(_isShowClear)
                     ? IconButton(
@@ -161,7 +164,7 @@ class _LoginPageState extends State<LoginPage> {
               decoration: InputDecoration(
                   labelText: "密码",
                   hintText: "请输入密码",
-                  prefixIcon: Icon(Icons.lock),
+                  prefixIcon: const Icon(Icons.lock),
                   // 是否显示密码
                   suffixIcon: IconButton(
                     icon: Icon((_isShowPwd) ? Icons.visibility : Icons.visibility_off),
@@ -188,7 +191,7 @@ class _LoginPageState extends State<LoginPage> {
 
     // 登录按钮区域
     Widget loginButtonArea = Container(
-      margin: EdgeInsets.only(left: 20,right: 20),
+      margin: const EdgeInsets.only(left: 20,right: 20),
       height: 45.0,
       child: RaisedButton(
         color: Colors.blue[300],
@@ -248,7 +251,7 @@ class _LoginPageState extends State<LoginPage> {
               IconButton(
                 color: Colors.green[200],
                 // 第三方库icon图标
-                icon: const Icon(FontAwesomeIcons.weixin),
+                icon: const Icon(IconDataSolid(0xf5d2)),
                 iconSize: 40.0,
                 onPressed: (){
 
