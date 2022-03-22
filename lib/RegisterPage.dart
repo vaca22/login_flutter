@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'RegisterPage.dart';
-
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
 
   //焦点
   FocusNode _focusNodeUserName = new FocusNode();
@@ -198,7 +196,7 @@ class _LoginPageState extends State<LoginPage> {
       child: RaisedButton(
         color: Colors.blue[300],
         child: Text(
-          "登录",
+          "注册",
           style: Theme.of(context).primaryTextTheme.headline5,
         ),
         // 设置按钮圆角
@@ -311,7 +309,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             //点击快速注册、执行事件
             onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>RegisterPage()));
+
             },
           )
         ],
