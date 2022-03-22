@@ -251,7 +251,7 @@ class _LoginPageState extends State<LoginPage> {
               IconButton(
                 color: Colors.green[200],
                 // 第三方库icon图标
-                icon: const Icon(IconDataSolid(0xf5d2)),
+                icon: const Icon(FontAwesomeIcons.weixin),//const Icon(IconDataSolid(0xf5d2)),
                 iconSize: 40.0,
                 onPressed: (){
 
