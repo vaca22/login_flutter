@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:login_flutter/MyHomePage.dart';
 
@@ -217,8 +218,39 @@ class _LoginPageState extends State<LoginPage> {
             _formKey.currentState?.save();
             //todo 登录操作
             print("$_username + $_password");
+            print("fuckyouyou");
             var nn=login(phone: _username, password: _password);
-            nn.then((value) => {if(value){Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false)}});
+            nn.then(
+                    (value) =>
+                    {
+                      if(value){
+                Fluttertoast.showToast(
+                msg: "登录成功",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor:  Color(0xa0000000),
+                textColor: Colors.white,
+                fontSize: 16.0
+            ),
+                        Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false),
+                        0
+                      }else{
+                        Fluttertoast.showToast(
+                            msg: "密码错误",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor:  Color(0xa0000000),
+                            textColor: Colors.white,
+                            fontSize: 16.0
+                        ),
+                      }
+
+
+
+                    }
+            );
           }
 
         },
