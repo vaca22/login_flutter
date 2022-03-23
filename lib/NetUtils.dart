@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -8,7 +9,7 @@ import 'package:http/http.dart' as http;
 var netAddr='http://139.9.206.3:13208/cloud-napi/v1/';
 
 
-void register({required String phone,required String password}) async{
+Future<bool> register({required String phone,required String password}) async{
   var url = Uri.parse(netAddr+'register');
   Map<String, String> requestHeaders = {
     'Content-type': 'application/json',
@@ -25,11 +26,6 @@ void register({required String phone,required String password}) async{
   var nnx="";
   if(result["code"]==1){
     nnx="注册成功";
-    print("fuck1");
-  }else{
-    nnx="注册失败， 用户已存在";
-    print("fuck12");
-  }
     Fluttertoast.showToast(
         msg: nnx,
         toastLength: Toast.LENGTH_SHORT,
@@ -39,4 +35,21 @@ void register({required String phone,required String password}) async{
         textColor: Colors.white,
         fontSize: 16.0
     );
+    print("fuck1");
+    return true;
+  }else{
+    nnx="注册失败， 用户已存在";
+    Fluttertoast.showToast(
+        msg: nnx,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor:  Color(0xa0000000),
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
+    print("fuck12");
+    return false;
+  }
+
 }

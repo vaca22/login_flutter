@@ -212,7 +212,8 @@ class _RegisterPageState extends State<RegisterPage> {
             _formKey.currentState?.save();
             //todo 登录操作
             print("$_username + $_password");
-            register(phone: _username, password: _password);
+            var nn=register(phone: _username, password: _password);
+            nn.then((value) => {if(value){Navigator.pop(context)}});
           }
 
         },
