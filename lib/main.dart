@@ -16,23 +16,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(750, 1334),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: () =>MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: LoginPage(),
-        routes:  <String,WidgetBuilder>{
-          '/login':(BuildContext context)=> LoginPage(),
-          '/register':(BuildContext context)=> RegisterPage(),
-          '/home':(BuildContext context)=> const MyHomePage(title: "title"),
-        },
-      )
-    );
-
+        designSize: const Size(750, 1334),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: () => MaterialApp(
+              title: 'Flutter Demo',
+              theme: ThemeData(
+                primarySwatch: Colors.blue,
+              ),
+              home: LoginPage(),
+              routes: <String, WidgetBuilder>{
+                '/login': (BuildContext context) => LoginPage(),
+                '/register': (BuildContext context) => RegisterPage(),
+                '/home': (BuildContext context) =>
+                    const MyHomePage(title: "title"),
+              },
+            ));
   }
 }
-

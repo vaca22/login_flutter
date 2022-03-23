@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:login_flutter/NetUtils.dart';
 
@@ -10,7 +11,6 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-
   //焦点
   FocusNode _focusNodeUserName = new FocusNode();
   FocusNode _focusNodePassWord = new FocusNode();
@@ -21,10 +21,10 @@ class _RegisterPageState extends State<RegisterPage> {
   //表单状态
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  var _password = '';//用户名
-  var _username = '';//密码
-  var _isShowPwd = false;//是否显示密码
-  var _isShowClear = false;//是否显示输入框尾部的清除按钮
+  var _password = ''; //用户名
+  var _username = ''; //密码
+  var _isShowPwd = false; //是否显示密码
+  var _isShowClear = false; //是否显示输入框尾部的清除按钮
 
   @override
   void initState() {
@@ -33,18 +33,16 @@ class _RegisterPageState extends State<RegisterPage> {
     _focusNodeUserName.addListener(_focusNodeListener);
     _focusNodePassWord.addListener(_focusNodeListener);
     //监听用户名框的输入改变
-    _userNameController.addListener((){
+    _userNameController.addListener(() {
       print(_userNameController.text);
 
       // 监听文本框输入变化，当有内容的时候，显示尾部清除按钮，否则不显示
       if (_userNameController.text.isNotEmpty) {
         _isShowClear = true;
-      }else{
+      } else {
         _isShowClear = false;
       }
-      setState(() {
-
-      });
+      setState(() {});
     });
     super.initState();
   }
@@ -60,8 +58,8 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   // 监听焦点
-  Future<Null> _focusNodeListener() async{
-    if(_focusNodeUserName.hasFocus){
+  Future<Null> _focusNodeListener() async {
+    if (_focusNodeUserName.hasFocus) {
       if (kDebugMode) {
         print("用户名框获取焦点");
       }
@@ -77,24 +75,24 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-
   /// 验证用户名
-  String? validateUserName(value){
+  String? validateUserName(value) {
     // 正则匹配手机号
-    RegExp exp = RegExp(r'^((13[0-9])|(14[0-9])|(15[0-9])|(16[0-9])|(17[0-9])|(18[0-9])|(19[0-9]))\d{8}$');
+    RegExp exp = RegExp(
+        r'^((13[0-9])|(14[0-9])|(15[0-9])|(16[0-9])|(17[0-9])|(18[0-9])|(19[0-9]))\d{8}$');
     if (value.isEmpty) {
       return '手机号不能为空!';
-    }else if (!exp.hasMatch(value)) {
+    } else if (!exp.hasMatch(value)) {
       return '请输入正确手机号';
     }
     return null;
   }
 
   /// 验证密码
-  String? validatePassWord(value){
+  String? validatePassWord(value) {
     if (value.isEmpty) {
       return '密码不能为空';
-    }else if(value.trim().length<6 || value.trim().length>18){
+    } else if (value.trim().length < 6 || value.trim().length > 18) {
       return '密码长度不正确';
     }
     return null;
@@ -102,7 +100,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-
     if (kDebugMode) {
       print(ScreenUtil().scaleHeight);
     }
@@ -123,11 +120,10 @@ class _RegisterPageState extends State<RegisterPage> {
 
     //输入文本框区域
     Widget inputTextArea = Container(
-      margin: const EdgeInsets.only(left: 20,right: 20),
+      margin: const EdgeInsets.only(left: 20, right: 20),
       decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(8)),
-          color: Colors.white
-      ),
+          color: Colors.white),
       child: Form(
         key: _formKey,
         child: Column(
@@ -143,20 +139,20 @@ class _RegisterPageState extends State<RegisterPage> {
                 hintText: "请输入手机号",
                 prefixIcon: const Icon(Icons.person),
                 //尾部添加清除按钮
-                suffixIcon:(_isShowClear)
+                suffixIcon: (_isShowClear)
                     ? IconButton(
-                  icon: const Icon(Icons.clear),
-                  onPressed: (){
-                    // 清空输入框内容
-                    _userNameController.clear();
-                  },
-                )
-                    : null ,
+                        icon: const Icon(Icons.clear),
+                        onPressed: () {
+                          // 清空输入框内容
+                          _userNameController.clear();
+                        },
+                      )
+                    : null,
               ),
               //验证用户名
               validator: validateUserName,
               //保存数据
-              onSaved: (String? value){
+              onSaved: (String? value) {
                 _username = value!;
               },
             ),
@@ -168,20 +164,20 @@ class _RegisterPageState extends State<RegisterPage> {
                   prefixIcon: const Icon(Icons.lock),
                   // 是否显示密码
                   suffixIcon: IconButton(
-                    icon: Icon((_isShowPwd) ? Icons.visibility : Icons.visibility_off),
+                    icon: Icon(
+                        (_isShowPwd) ? Icons.visibility : Icons.visibility_off),
                     // 点击改变显示或隐藏密码
-                    onPressed: (){
+                    onPressed: () {
                       setState(() {
                         _isShowPwd = !_isShowPwd;
                       });
                     },
-                  )
-              ),
+                  )),
               obscureText: !_isShowPwd,
               //密码验证
-              validator:validatePassWord,
+              validator: validatePassWord,
               //保存数据
-              onSaved: (String? value){
+              onSaved: (String? value) {
                 _password = value!;
               },
             )
@@ -192,7 +188,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
     // 登录按钮区域
     Widget loginButtonArea = Container(
-      margin: const EdgeInsets.only(left: 20,right: 20),
+      margin: const EdgeInsets.only(left: 20, right: 20),
       height: 65.0,
       child: RaisedButton(
         color: Colors.blue[300],
@@ -201,28 +197,52 @@ class _RegisterPageState extends State<RegisterPage> {
           style: Theme.of(context).primaryTextTheme.headline5,
         ),
         // 设置按钮圆角
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-        onPressed: (){
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        onPressed: () {
           //点击登录按钮，解除焦点，回收键盘
           _focusNodePassWord.unfocus();
           _focusNodeUserName.unfocus();
 
-          if (_formKey.currentState?.validate()==true) {
+          if (_formKey.currentState?.validate() == true) {
             //只有输入通过验证，才会执行这里
             _formKey.currentState?.save();
             //todo 登录操作
             print("$_username + $_password");
-            var nn=register(phone: _username, password: _password);
-            nn.then((value) => {if(value){Navigator.pop(context)}});
+            var nn = register(phone: _username, password: _password);
+            nn.then((value) => {
+                  if (value)
+                    {
+                      Fluttertoast.showToast(
+                          msg: "注册成功",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Color(0xa0000000),
+                          textColor: Colors.white,
+                          fontSize: 16.0),
+                      Navigator.pop(context)
+                    }
+                  else
+                    {
+                      Fluttertoast.showToast(
+                          msg: "注册失败， 用户已存在",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Color(0xa0000000),
+                          textColor: Colors.white,
+                          fontSize: 16.0),
+                    }
+                });
           }
-
         },
       ),
     );
 
     //第三方登录区域
     Widget thirdLoginArea = Container(
-      margin: const EdgeInsets.only(left: 20,right: 20),
+      margin: const EdgeInsets.only(left: 20, right: 20),
       child: Column(
         children: <Widget>[
           Row(
@@ -233,11 +253,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 width: 80,
                 height: 1.0,
                 color: Colors.grey,
-
               ),
-              const Text(
-                  '第三方登录'
-              ),
+              const Text('第三方登录'),
               Container(
                 width: 80,
                 height: 1.0,
@@ -254,27 +271,22 @@ class _RegisterPageState extends State<RegisterPage> {
               IconButton(
                 color: Colors.green[200],
                 // 第三方库icon图标
-                icon: const Icon(FontAwesomeIcons.weixin),//const Icon(IconDataSolid(0xf5d2)),
+                icon: const Icon(FontAwesomeIcons.weixin),
+                //const Icon(IconDataSolid(0xf5d2)),
                 iconSize: 40.0,
-                onPressed: (){
-
-                },
+                onPressed: () {},
               ),
               IconButton(
                 color: Colors.green[200],
                 icon: const Icon(FontAwesomeIcons.facebook),
                 iconSize: 40.0,
-                onPressed: (){
-
-                },
+                onPressed: () {},
               ),
               IconButton(
                 color: Colors.green[200],
                 icon: const Icon(FontAwesomeIcons.qq),
                 iconSize: 40.0,
-                onPressed: (){
-
-                },
+                onPressed: () {},
               )
             ],
           )
@@ -284,7 +296,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
     //忘记密码  立即注册
     Widget bottomArea = Container(
-      margin: const EdgeInsets.only(right: 20,left: 30),
+      margin: const EdgeInsets.only(right: 20, left: 30),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -298,9 +310,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
             //忘记密码按钮，点击执行事件
-            onPressed: (){
-
-            },
+            onPressed: () {},
           ),
           FlatButton(
             child: Text(
@@ -311,9 +321,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
             //点击快速注册、执行事件
-            onPressed: (){
-
-            },
+            onPressed: () {},
           )
         ],
       ),
@@ -323,7 +331,7 @@ class _RegisterPageState extends State<RegisterPage> {
       backgroundColor: Colors.white,
       // 外层添加一个手势，用于点击空白部分，回收键盘
       body: GestureDetector(
-        onTap: (){
+        onTap: () {
           // 点击空白区域，回收键盘
           print("点击了空白区域");
           _focusNodePassWord.unfocus();
@@ -331,13 +339,21 @@ class _RegisterPageState extends State<RegisterPage> {
         },
         child: ListView(
           children: <Widget>[
-            SizedBox(height: ScreenUtil().setHeight(80),),
+            SizedBox(
+              height: ScreenUtil().setHeight(80),
+            ),
             logoImageArea,
-            SizedBox(height: ScreenUtil().setHeight(70),),
+            SizedBox(
+              height: ScreenUtil().setHeight(70),
+            ),
             inputTextArea,
-            SizedBox(height: ScreenUtil().setHeight(80),),
+            SizedBox(
+              height: ScreenUtil().setHeight(80),
+            ),
             loginButtonArea,
-            SizedBox(height: ScreenUtil().setHeight(60),),
+            SizedBox(
+              height: ScreenUtil().setHeight(60),
+            ),
             // thirdLoginArea,
             // SizedBox(height: ScreenUtil().setHeight(60),),
             // bottomArea,
