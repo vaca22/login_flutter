@@ -2,8 +2,14 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:login_flutter/common/Global.dart';
+import 'package:web_socket_channel/io.dart';
+import 'dart:convert' as convert;
+import 'package:web_socket_channel/status.dart' as status;
 
+import 'User.dart';
 class ChatPage extends StatefulWidget {
   const ChatPage({Key? key,required this.title, required this.orderNo}) : super(key: key);
   final String orderNo;
@@ -14,8 +20,7 @@ class ChatPage extends StatefulWidget {
   State<ChatPage> createState() => _ChatPageState();
 }
 
-
-
+late IOWebSocketChannel  channel;
 
 
 
@@ -27,10 +32,23 @@ class _ChatPageState extends State<ChatPage> {
   late String userId;
   late String employeeNo;
   late String userName;
+  void main2() async {
+    channel = IOWebSocketChannel.connect(Uri.parse('ws://139.9.206.3:13209?myid='+Global.phone));
+
+    channel.stream.listen((message) {
+      if (kDebugMode) {
+        print(message);
+      }
+      addMessage2(message);
+
+      // channel.sink.close(status.goingAway);
+    }, onError: (error) => print(error),);
+  }
 
   @override
   void initState() {
     super.initState();
+    main2();
     textEditingController = TextEditingController();
     initData();
   }
@@ -388,6 +406,8 @@ class _ChatPageState extends State<ChatPage> {
 
     String message = textEditingController.value.text;
     addMessage(message, tag);
+    String fuck=convert.jsonEncode( User(Global.phone, 'toid', message).toJson());
+    channel.sink.add(fuck);
     textEditingController.text = '';
 
   }
@@ -401,6 +421,28 @@ class _ChatPageState extends State<ChatPage> {
         "createdAt": time,
         "cusUid": userId,
         "employeeNo": employeeNo,
+        "name": userName,
+        "orderNo": widget.orderNo,
+        "reply": content,
+        "updatedAt": time,
+        'status': SENDING_TYPE,
+        'tag': '${tag}',
+      });
+    });
+    Timer(
+        Duration(milliseconds: 100),
+            () => _scrollController.jumpTo(0));
+  }
+
+  addMessage2(content) {
+    int tag = random.nextInt(maxValue);
+
+    int time = new DateTime.now().millisecondsSinceEpoch;
+    setState(() {
+      list.insert(0, {
+        "createdAt": time,
+        "cusUid": userId,
+        "employeeNo": "0",
         "name": userName,
         "orderNo": widget.orderNo,
         "reply": content,
