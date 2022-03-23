@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert' as convert;
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
@@ -6,12 +7,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:login_flutter/common/Global.dart';
 import 'package:web_socket_channel/io.dart';
-import 'dart:convert' as convert;
 import 'package:web_socket_channel/status.dart' as status;
 
 import 'User.dart';
+
 class ChatPage extends StatefulWidget {
-  const ChatPage({Key? key,required this.title, required this.orderNo}) : super(key: key);
+  const ChatPage({Key? key, required this.title, required this.orderNo})
+      : super(key: key);
   final String orderNo;
 
   final String title;
@@ -20,10 +22,7 @@ class ChatPage extends StatefulWidget {
   State<ChatPage> createState() => _ChatPageState();
 }
 
-late IOWebSocketChannel  channel;
-
-
-
+late IOWebSocketChannel channel;
 
 class _ChatPageState extends State<ChatPage> {
   late TextEditingController textEditingController;
@@ -32,17 +31,27 @@ class _ChatPageState extends State<ChatPage> {
   late String userId;
   late String employeeNo;
   late String userName;
+
   void main2() async {
-    channel = IOWebSocketChannel.connect(Uri.parse('ws://139.9.206.3:13209?myid='+Global.phone));
+    channel = IOWebSocketChannel.connect(
+        Uri.parse('ws://139.9.206.3:13209?myid=' + Global.phone));
 
-    channel.stream.listen((message) {
-      if (kDebugMode) {
-        print(message);
-      }
-      addMessage2(message);
+    channel.stream.listen(
+      (message) {
+        if (kDebugMode) {
+          print(message);
+        }
+        addMessage2(message);
 
-      // channel.sink.close(status.goingAway);
-    }, onError: (error) => print(error),);
+        // channel.sink.close(status.goingAway);
+      },
+      onError: (error) => {
+        channel.sink.close(status.goingAway),
+        Future.delayed(const Duration(milliseconds:2000), () {
+          main2();
+        }),
+      },
+    );
   }
 
   @override
@@ -57,10 +66,9 @@ class _ChatPageState extends State<ChatPage> {
     employeeNo = "50";
     userId = "54";
     userName = "我";
-    String url ='eReplyList';
+    String url = 'eReplyList';
 
     setState(() {
-
       // list = (res.data as List).reversed.toList();
     });
   }
@@ -101,36 +109,31 @@ class _ChatPageState extends State<ChatPage> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   Expanded(
-                    child:Container(
+                    child: Container(
                       margin: EdgeInsets.fromLTRB(15, 10, 0, 10),
                       constraints: BoxConstraints(
                         maxHeight: 100.0,
                         minHeight: 50.0,
                       ),
                       decoration: BoxDecoration(
-                          color:  Color(0xFFF5F6FF),
-                          borderRadius: BorderRadius.all(Radius.circular(2))
-                      ),
+                          color: Color(0xFFF5F6FF),
+                          borderRadius: BorderRadius.all(Radius.circular(2))),
                       child: TextField(
                         controller: textEditingController,
-                        cursorColor:Color(0xFF464EB5),
+                        cursorColor: Color(0xFF464EB5),
                         maxLines: null,
                         maxLength: 200,
                         decoration: InputDecoration(
                           counterText: '',
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.only(
-                              left: 16.0, right: 16.0, top: 10.0, bottom:10.0),
+                              left: 16.0, right: 16.0, top: 10.0, bottom: 10.0),
                           hintText: "回复",
-                          hintStyle: TextStyle(
-                              color: Color(0xFFADB3BA),
-                              fontSize:15
-                          ),
+                          hintStyle:
+                              TextStyle(color: Color(0xFFADB3BA), fontSize: 15),
                         ),
-                        style: TextStyle(
-                            color: Color(0xFF03073C),
-                            fontSize:15
-                        ),
+                        style:
+                            TextStyle(color: Color(0xFF03073C), fontSize: 15),
                       ),
                     ),
                   ),
@@ -161,10 +164,6 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-
-
-
-
   List list = []; //列表要展示的数据
 
   _renderList() {
@@ -192,8 +191,6 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-
-
   Widget _renderRowSendByOthers(BuildContext context, item) {
     return Container(
       padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
@@ -201,7 +198,7 @@ class _ChatPageState extends State<ChatPage> {
         children: <Widget>[
           Padding(
             child: Text(
-             "",
+              "",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Color(0xFFA1A6BB),
@@ -211,7 +208,7 @@ class _ChatPageState extends State<ChatPage> {
             padding: EdgeInsets.only(bottom: 20),
           ),
           Padding(
-            padding: EdgeInsets.only(left: 15,right: 45),
+            padding: EdgeInsets.only(left: 15, right: 45),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -270,7 +267,7 @@ class _ChatPageState extends State<ChatPage> {
                                 ],
                                 color: Colors.white,
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
+                                    BorderRadius.all(Radius.circular(10))),
                             margin: EdgeInsets.only(top: 8, left: 10),
                             padding: EdgeInsets.all(10),
                             child: Text(
@@ -348,8 +345,7 @@ class _ChatPageState extends State<ChatPage> {
                         child: const Image(
                             width: 11,
                             height: 20,
-                            image: AssetImage(
-                                "assets/images/a940.png")),
+                            image: AssetImage("assets/images/a940.png")),
                         margin: EdgeInsets.fromLTRB(0, 16, 2, 0),
                       ),
                       Row(
@@ -368,7 +364,7 @@ class _ChatPageState extends State<ChatPage> {
                                   ],
                                   color: Color(0xFF838CFF),
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
+                                      BorderRadius.all(Radius.circular(10))),
                               padding: EdgeInsets.all(10),
                               child: Text(
                                 item['reply'],
@@ -399,17 +395,17 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  final int maxValue = 1<<32;
+  final int maxValue = 1 << 32;
 
   sendTxt() async {
     int tag = random.nextInt(maxValue);
 
     String message = textEditingController.value.text;
     addMessage(message, tag);
-    String fuck=convert.jsonEncode( User(Global.phone, 'toid', message).toJson());
+    String fuck =
+        convert.jsonEncode(User(Global.phone, 'toid', message).toJson());
     channel.sink.add(fuck);
     textEditingController.text = '';
-
   }
 
   final random = Random();
@@ -429,9 +425,7 @@ class _ChatPageState extends State<ChatPage> {
         'tag': '${tag}',
       });
     });
-    Timer(
-        Duration(milliseconds: 100),
-            () => _scrollController.jumpTo(0));
+    Timer(Duration(milliseconds: 100), () => _scrollController.jumpTo(0));
   }
 
   addMessage2(content) {
@@ -443,7 +437,7 @@ class _ChatPageState extends State<ChatPage> {
         "createdAt": time,
         "cusUid": userId,
         "employeeNo": "0",
-        "name": userName,
+        "name": "X",
         "orderNo": widget.orderNo,
         "reply": content,
         "updatedAt": time,
@@ -451,13 +445,10 @@ class _ChatPageState extends State<ChatPage> {
         'tag': '${tag}',
       });
     });
-    Timer(
-        Duration(milliseconds: 100),
-            () => _scrollController.jumpTo(0));
+    Timer(Duration(milliseconds: 100), () => _scrollController.jumpTo(0));
   }
 
   static int SENDING_TYPE = 0;
   static int FAILED_TYPE = 1;
   static int SUCCESSED_TYPE = 2;
-
 }

@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'NetUtils.dart';
 import 'RegisterPage.dart';
+import 'common/Global.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -215,6 +216,7 @@ class _LoginPageState extends State<LoginPage> {
             print("$_username + $_password");
             print("fuckyouyou");
             var nn = login(phone: _username, password: _password);
+            Global.phone=_username;
             nn.then((value) => {
                   if (value)
                     {
