@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:login_flutter/NetUtils.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -211,6 +212,7 @@ class _RegisterPageState extends State<RegisterPage> {
             _formKey.currentState?.save();
             //todo 登录操作
             print("$_username + $_password");
+            register(phone: _username, password: _password);
           }
 
         },
