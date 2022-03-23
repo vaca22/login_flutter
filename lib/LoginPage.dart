@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'NetUtils.dart';
 import 'RegisterPage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -215,6 +216,7 @@ class _LoginPageState extends State<LoginPage> {
             _formKey.currentState?.save();
             //todo 登录操作
             print("$_username + $_password");
+            login(phone: _username, password: _password);
           }
 
         },
