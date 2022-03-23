@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:login_flutter/LoginPage.dart';
 
+import 'ChatPage.dart';
 import 'MyHomePage.dart';
 import 'RegisterPage.dart';
 
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
                 '/login': (BuildContext context) => LoginPage(),
                 '/register': (BuildContext context) => RegisterPage(),
                 '/home': (BuildContext context) =>
-                    const MyHomePage(title: "title"),
+                const ChatPage(title: 'Flutter me Page',orderNo: "12",),
               },
             ));
   }
