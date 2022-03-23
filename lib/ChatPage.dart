@@ -46,10 +46,10 @@ class _ChatPageState extends State<ChatPage> {
         // channel.sink.close(status.goingAway);
       },
       onError: (error) => {
-        channel.sink.close(status.goingAway),
-        Future.delayed(const Duration(milliseconds:2000), () {
-          main2();
-        }),
+        // channel.sink.close(status.goingAway),
+        // Future.delayed(const Duration(milliseconds:2000), () {
+        //   main2();
+        // }),
       },
     );
   }
