@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:login_flutter/LoginPage.dart';
 
 import 'MyHomePage.dart';
+import 'RegisterPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,6 +25,11 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: LoginPage(),
+        routes:  <String,WidgetBuilder>{
+          '/login':(BuildContext context)=> LoginPage(),
+          '/register':(BuildContext context)=> RegisterPage(),
+          '/home':(BuildContext context)=> const MyHomePage(title: "title"),
+        },
       )
     );
 

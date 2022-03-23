@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:login_flutter/MyHomePage.dart';
 
 import 'NetUtils.dart';
 import 'RegisterPage.dart';
@@ -216,7 +217,8 @@ class _LoginPageState extends State<LoginPage> {
             _formKey.currentState?.save();
             //todo 登录操作
             print("$_username + $_password");
-            login(phone: _username, password: _password);
+            var nn=login(phone: _username, password: _password);
+            nn.then((value) => {if(value){Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false)}});
           }
 
         },
