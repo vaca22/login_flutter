@@ -31,33 +31,31 @@ class _ChatPageState extends State<ChatPage> {
   late String userId;
   late String employeeNo;
   late String userName;
-  final channel =IOWebSocketChannel.connect(Uri.parse('ws://192.168.6.112:8091/ws?uid=456&fa=234'));
-  void main2() async {
-    // channel = IOWebSocketChannel.connect(
-    //     Uri.parse('ws://139.9.206.3:13209?myid=' + Global.phone));
-    channel.stream.listen(
-      (message) {
-        if (kDebugMode) {
-          print(message);
-        }
-        addMessage2(message);
+  final url=Uri.parse('ws://139.9.206.3:13209/ws?uid=456&fa=234');
+  IOWebSocketChannel? channel ;
 
-        // channel.sink.close(status.goingAway);
-      },
-      onError: (error) => {
-        print(error)
-        // channel.sink.close(status.goingAway),
-        // Future.delayed(const Duration(milliseconds:2000), () {
-        //   main2();
-        // }),
-      },
-    );
+  wserror(err) async {
+    print(DateTime.now().toString() + " Connection error: $err");
+    await reconnect();
   }
+  reconnect() async {
+    if (channel != null) {
+      // add in a reconnect delay
+      await Future.delayed(Duration(seconds: 4));
+    }
+    setState(() {
+      print(DateTime.now().toString() + " Starting connection attempt...");
+      channel = IOWebSocketChannel.connect(url);
+      print(DateTime.now().toString() + " Connection attempt completed.");
+    });
+    channel?.stream.listen((data) => addMessage2(data), onDone: reconnect, onError: wserror, cancelOnError: true);
+  }
+
 
   @override
   void initState() {
     super.initState();
-     main2();
+    reconnect();
     textEditingController = TextEditingController();
     initData();
   }
@@ -404,7 +402,7 @@ class _ChatPageState extends State<ChatPage> {
     addMessage(message, tag);
     String fuck =
         convert.jsonEncode(User(Global.phone, 'toid', message).toJson());
-    channel.sink.add(fuck);
+    channel?.sink.add(fuck);
     textEditingController.text = '';
   }
 
