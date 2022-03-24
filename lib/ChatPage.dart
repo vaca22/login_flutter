@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:login_flutter/common/Global.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/status.dart' as status;
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'User.dart';
 
@@ -32,7 +33,8 @@ class _ChatPageState extends State<ChatPage> {
   late String employeeNo;
   late String userName;
   final url=Uri.parse('wss://www.vaca.vip/wsws?uid=456&fa=234');
-  IOWebSocketChannel? channel ;
+  final url2='wss://www.vaca.vip/wsws?uid=456&fa=234';
+  WebSocketChannel? channel ;
 
   wserror(err) async {
     print(DateTime.now().toString() + " Connection error: $err");
@@ -45,7 +47,7 @@ class _ChatPageState extends State<ChatPage> {
     }
     setState(() {
       print(DateTime.now().toString() + " Starting connection attempt...");
-      channel = IOWebSocketChannel.connect(url);
+      channel = WebSocketChannel.connect(url);
       print(DateTime.now().toString() + " Connection attempt completed.");
     });
     channel?.stream.listen((data) => addMessage2(data), onDone: reconnect, onError: wserror, cancelOnError: true);
@@ -393,11 +395,11 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  final int maxValue = 1 << 32;
+  final int maxValue = 1 << 30;
 
   sendTxt() async {
     int tag = random.nextInt(maxValue);
-
+   //  int tag =55;
     String message = textEditingController.value.text;
     addMessage(message, tag);
     String fuck =
