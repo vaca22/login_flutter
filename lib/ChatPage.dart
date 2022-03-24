@@ -234,14 +234,14 @@ class _ChatPageState extends State<ChatPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Padding(
-                        // child: Text(
-                        //   item['name'],
-                        //   softWrap: true,
-                        //   style: TextStyle(
-                        //     color: Color(0xFF677092),
-                        //     fontSize: 14,
-                        //   ),
-                        // ),
+                        child: Text(
+                          item['name'],
+                          softWrap: true,
+                          style: TextStyle(
+                            color: Color(0xFF677092),
+                            fontSize: 14,
+                          ),
+                        ),
                         padding: EdgeInsets.only(left: 20, right: 30),
                       ),
                       Stack(
@@ -427,6 +427,9 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   addMessage2(content) {
+    var nn1=convert.jsonDecode(content);
+    String nn2=nn1["id"];
+    String nn3=nn1["params"];
     int tag = random.nextInt(maxValue);
 
     int time = new DateTime.now().millisecondsSinceEpoch;
@@ -435,9 +438,9 @@ class _ChatPageState extends State<ChatPage> {
         "createdAt": time,
         "cusUid": userId,
         "employeeNo": "0",
-        "name": "X",
+        "name": nn2,
         "orderNo": widget.orderNo,
-        "reply": content,
+        "reply": nn3,
         "updatedAt": time,
         'status': SENDING_TYPE,
         'tag': '${tag}',
