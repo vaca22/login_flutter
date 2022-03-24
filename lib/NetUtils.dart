@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
-var netAddr = 'http://www.vaca.vip:8082/cloud-napi/v1/';
+var netAddr = 'https://www.vaca.vip/cloud-napi/v1/';
 
 Future<bool> register({required String phone, required String password}) async {
   var url = Uri.parse(netAddr + 'register');
   Map<String, String> requestHeaders = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
-    'Authorization': '<Your token>'
+    'Access-Control-Allow-Origin': '*'
   };
   final msg = jsonEncode({'phone': phone, 'password': password});
 

@@ -31,7 +31,7 @@ class _ChatPageState extends State<ChatPage> {
   late String userId;
   late String employeeNo;
   late String userName;
-  final url=Uri.parse('ws://www.vaca.vip:3003/ws?uid=456&fa=234');
+  final url=Uri.parse('wss://www.vaca.vip/wsws?uid=456&fa=234');
   IOWebSocketChannel? channel ;
 
   wserror(err) async {
