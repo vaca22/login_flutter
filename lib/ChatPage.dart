@@ -77,7 +77,7 @@ class _ChatPageState extends State<ChatPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('哈哈'),
+        title: Text('聊天室'),
       ),
       body: Container(
         width: double.infinity,
