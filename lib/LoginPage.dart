@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'NetUtils.dart';
 import 'RegisterPage.dart';
@@ -12,6 +13,7 @@ class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
+
 
 class _LoginPageState extends State<LoginPage> {
   //焦点
@@ -28,11 +30,25 @@ class _LoginPageState extends State<LoginPage> {
   var _username = ''; //密码
   var _isShowPwd = false; //是否显示密码
   var _isShowClear = false; //是否显示输入框尾部的清除按钮
+  void readPhone() async{
+    final prefs = await SharedPreferences.getInstance();
+    final String? action = prefs.getString('phone');
+    if(action!=null){
+      Global.phone=action;
+      Navigator.of(context).pushNamedAndRemoveUntil(
+          '/home', (Route<dynamic> route) => false);
+    }
+  }
 
+  void savePhone(String x) async{
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('phone', x);
+  }
   @override
   void initState() {
     // TODO: implement initState
     //设置焦点监听
+    readPhone();
     _focusNodeUserName.addListener(_focusNodeListener);
     _focusNodePassWord.addListener(_focusNodeListener);
     //监听用户名框的输入改变
@@ -220,6 +236,7 @@ class _LoginPageState extends State<LoginPage> {
             nn.then((value) => {
                   if (value)
                     {
+                      savePhone(Global.phone),
                       Fluttertoast.showToast(
                           msg: "登录成功",
                           toastLength: Toast.LENGTH_SHORT,

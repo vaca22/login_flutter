@@ -22,7 +22,7 @@ class ChatPage extends StatefulWidget {
   State<ChatPage> createState() => _ChatPageState();
 }
 
-late IOWebSocketChannel channel;
+
 
 class _ChatPageState extends State<ChatPage> {
   late TextEditingController textEditingController;
@@ -31,11 +31,10 @@ class _ChatPageState extends State<ChatPage> {
   late String userId;
   late String employeeNo;
   late String userName;
-
+  final channel =IOWebSocketChannel.connect(Uri.parse('ws://192.168.6.112:8091/ws?uid=456&fa=234'));
   void main2() async {
-    channel = IOWebSocketChannel.connect(
-        Uri.parse('ws://139.9.206.3:13209?myid=' + Global.phone));
-
+    // channel = IOWebSocketChannel.connect(
+    //     Uri.parse('ws://139.9.206.3:13209?myid=' + Global.phone));
     channel.stream.listen(
       (message) {
         if (kDebugMode) {
@@ -46,6 +45,7 @@ class _ChatPageState extends State<ChatPage> {
         // channel.sink.close(status.goingAway);
       },
       onError: (error) => {
+        print(error)
         // channel.sink.close(status.goingAway),
         // Future.delayed(const Duration(milliseconds:2000), () {
         //   main2();
@@ -57,7 +57,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void initState() {
     super.initState();
-    main2();
+     main2();
     textEditingController = TextEditingController();
     initData();
   }
