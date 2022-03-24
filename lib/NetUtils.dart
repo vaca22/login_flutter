@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
-var netAddr = 'http://139.9.206.3:13208/cloud-napi/v1/';
+var netAddr = 'http://www.vaca.vip:8082/cloud-napi/v1/';
 
 Future<bool> register({required String phone, required String password}) async {
   var url = Uri.parse(netAddr + 'register');

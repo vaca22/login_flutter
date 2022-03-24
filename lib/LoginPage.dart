@@ -35,8 +35,8 @@ class _LoginPageState extends State<LoginPage> {
     final String? action = prefs.getString('phone');
     if(action!=null){
       Global.phone=action;
-      Navigator.of(context).pushNamedAndRemoveUntil(
-          '/home', (Route<dynamic> route) => false);
+      // Navigator.of(context).pushNamedAndRemoveUntil(
+      //     '/home', (Route<dynamic> route) => false);
     }
   }
 
