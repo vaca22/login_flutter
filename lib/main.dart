@@ -20,7 +20,8 @@ class MyApp extends StatelessWidget {
         designSize: const Size(750, 1334),
         minTextAdapt: true,
         splitScreenMode: true,
-        builder: () => MaterialApp(
+        builder:(context , child)  {
+          return MaterialApp(
               title: 'Flutter Demo',
               theme: ThemeData(
                 primarySwatch: Colors.blue,
@@ -32,6 +33,8 @@ class MyApp extends StatelessWidget {
                 '/home': (BuildContext context) =>
                 const ChatPage(title: 'Flutter me Page',orderNo: "12",),
               },
-            ));
+            );
+        },
+    );
   }
 }

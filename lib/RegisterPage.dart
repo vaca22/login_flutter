@@ -190,15 +190,12 @@ class _RegisterPageState extends State<RegisterPage> {
     Widget loginButtonArea = Container(
       margin: const EdgeInsets.only(left: 20, right: 20),
       height: 65.0,
-      child: RaisedButton(
-        color: Colors.blue[300],
+      child: ElevatedButton(
         child: Text(
           "注册",
           style: Theme.of(context).primaryTextTheme.headline5,
         ),
         // 设置按钮圆角
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         onPressed: () {
           //点击登录按钮，解除焦点，回收键盘
           _focusNodePassWord.unfocus();
@@ -301,7 +298,7 @@ class _RegisterPageState extends State<RegisterPage> {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          FlatButton(
+          ElevatedButton(
             child: Text(
               "忘记密码?",
               style: TextStyle(
@@ -312,7 +309,7 @@ class _RegisterPageState extends State<RegisterPage> {
             //忘记密码按钮，点击执行事件
             onPressed: () {},
           ),
-          FlatButton(
+          ElevatedButton(
             child: Text(
               "快速注册",
               style: TextStyle(
